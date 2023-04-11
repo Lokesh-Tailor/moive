@@ -30,12 +30,37 @@
     </div>
     <script>
         const form = document.querySelector("form")
-        const input = document.querySelector("input")
+        const movieName = document.querySelector("input")
 
-        form.onclick = () => {
-            e.preventdefault()
+        form.onclick = (e) => {
+            e.preventDefault()
+            fetch("https://api.themoviedb.org/3/search/movie?api_key=6d8139e561c67c41f714ea9f234c174c&language=en-US&query=" + movieName.value + "&page=1&include_adult=false")
+                .then((response) => { return response.json() })
+                .then((result) => {
+                    console.log(result)
+                    showMoive(result.results)
+                })
         }
+        function showMoive(code) {
+            if (code.lenght === 0) {
+                console.log("code not found")
+            } else {
 
+                for (i = 0; i < code.lenght; i++) {
+                    let moiveimage = document.createElement("img")
+                    moiveimage.src = code[i].poster_path
+
+                    document.querySelector("#result").append(moiveimage)
+                }
+
+
+            }
+
+
+
+
+
+        }
 
 
     </script>
